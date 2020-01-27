@@ -19,7 +19,7 @@ var linkedListToArray = function(head) {
   let arr = [];
   let cur = head;
   while (cur) {
-    arr.push(cur.data);
+    arr.push(cur.val);
     cur = cur.next;
   }
   return arr;

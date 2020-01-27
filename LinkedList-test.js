@@ -7,8 +7,8 @@ test('append', t => {
   const linkedList = new LinkedList();
   linkedList.append(5);
 
-  t.is(linkedList.head.data, 5);
-  t.is(linkedList.tail.data, 5);
+  t.is(linkedList.head.val, 5);
+  t.is(linkedList.tail.val, 5);
   t.deepEqual(utils.linkedListToArray(linkedList.head), [5]);
 });
 
@@ -17,8 +17,8 @@ test('append - verify tail and head', t => {
   linkedList.append(5);
   linkedList.append(6);
 
-  t.is(linkedList.head.data, 5);
-  t.is(linkedList.tail.data, 6);
+  t.is(linkedList.head.val, 5);
+  t.is(linkedList.tail.val, 6);
   t.deepEqual(utils.linkedListToArray(linkedList.head), [5, 6]);
 });
 
@@ -27,15 +27,15 @@ test('prepend', t => {
   linkedList.prepend('foo');
   linkedList.prepend('bar');
 
-  t.is(linkedList.head.data, 'bar');
-  t.is(linkedList.tail.data, 'foo');
+  t.is(linkedList.head.val, 'bar');
+  t.is(linkedList.tail.val, 'foo');
   t.deepEqual(utils.linkedListToArray(linkedList.head), ['bar', 'foo']);
 });
 
 test('delete', t => {
   const linkedList = new LinkedList();
   linkedList.append(5);
-  linkedList.delete(node => node.data === 5);
+  linkedList.delete(node => node.val === 5);
 
   t.deepEqual(utils.linkedListToArray(linkedList.head), []);
 });
@@ -45,9 +45,9 @@ test('find', t => {
   linkedList.append(5);
   linkedList.append(6);
   linkedList.append(7);
-  const existingNode = linkedList.find(node => node.data === 7);
-  const nonExistingNode = linkedList.find(node => node.data === 99);
+  const existingNode = linkedList.find(node => node.val === 7);
+  const nonExistingNode = linkedList.find(node => node.val === 99);
 
-  t.is(existingNode.data, 7);
+  t.is(existingNode.val, 7);
   t.is(nonExistingNode, null);
 });
