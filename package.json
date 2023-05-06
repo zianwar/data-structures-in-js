@@ -1,18 +1,23 @@
 {
   "name": "data-structures-js",
   "version": "1.0.0",
-  "description": "Basic data structures implementations in Javascript",
+  "description": "Basic data structures implementations in Typescript",
   "main": "",
   "scripts": {
-    "test": "ava -v"
+    "test": "npx jest"
   },
   "keywords": [
+    "typescript",
     "javascript",
     "data-structures"
   ],
   "author": "Anwar Ziani <anwaar.ziani@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^2.4.0"
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.16.3",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4"
   }
 }
