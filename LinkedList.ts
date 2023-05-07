@@ -1,17 +1,17 @@
-class ListNode {
-  constructor(val) {
+export class ListNode<T> {
+  val: T;
+  next: ListNode<T> = null;
+
+  constructor(val: T) {
     this.val = val;
-    this.next = null;
   }
 }
 
-class LinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
+export class LinkedList<T> {
+  head: ListNode<T> | null;
+  tail: ListNode<T> | null;
 
-  append(val) {
+  append(val: T): void {
     const node = new ListNode(val);
 
     if (!this.head && !this.tail) {
@@ -26,7 +26,7 @@ class LinkedList {
     }
   }
 
-  prepend(val) {
+  prepend(val: T): void {
     const node = new ListNode(val);
 
     if (!this.head && !this.tail) {
@@ -41,7 +41,7 @@ class LinkedList {
     }
   }
 
-  find(callback) {
+  find(callback: (node: ListNode<T>) => boolean): ListNode<T> | null {
     let node = this.head;
     while (node) {
       if (callback(node)) {
@@ -52,7 +52,7 @@ class LinkedList {
     return null;
   }
 
-  delete(callback) {
+  delete(callback: (node: ListNode<T>) => boolean): void {
     if (callback(this.head)) {
       this.head = this.head.next;
     }
@@ -69,5 +69,3 @@ class LinkedList {
     }
   }
 }
-
-module.exports = LinkedList;

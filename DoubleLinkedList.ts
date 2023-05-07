@@ -1,18 +1,18 @@
-class ListNode {
-  constructor(val) {
+export class ListNode<T> {
+  val: T;
+  next: ListNode<T> = null;
+  prev: ListNode<T> = null;
+
+  constructor(val: T) {
     this.val = val;
-    this.next = null;
-    this.prev = null;
   }
 }
 
-class DoubleLinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
+export class DoubleLinkedList<T> {
+  head: ListNode<T> | null;
+  tail: ListNode<T> | null;
 
-  append(val) {
+  append(val: T): void {
     const node = new ListNode(val);
 
     // list is empty
@@ -30,7 +30,7 @@ class DoubleLinkedList {
     }
   }
 
-  prepend(val) {
+  prepend(val: T): void {
     const node = new ListNode(val);
 
     // list is empty
@@ -48,7 +48,7 @@ class DoubleLinkedList {
     }
   }
 
-  find(callback) {
+  find(callback: (node: ListNode<T>) => boolean): ListNode<T> | null {
     let node = this.head;
     while (node) {
       if (callback(node)) {
@@ -59,7 +59,7 @@ class DoubleLinkedList {
     return null;
   }
 
-  replace(callback, val) {
+  replace(callback: (node: ListNode<T>) => boolean, val: T): ListNode<T> | null {
     let node = this.head;
     while (node) {
       if (callback(node)) {
@@ -71,7 +71,7 @@ class DoubleLinkedList {
     return null;
   }
 
-  delete(callback) {
+  delete(callback: (node: ListNode<T>) => boolean): void {
     // delete head
     if (callback(this.head)) {
       if (this.head.next) {
@@ -97,5 +97,3 @@ class DoubleLinkedList {
     }
   }
 }
-
-module.exports = DoubleLinkedList;

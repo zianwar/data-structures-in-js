@@ -1,21 +1,24 @@
-class DynamicArray {
-  static get DefaultSize() {
-    return 20;
-  }
+export class DynamicArray<T> {
+  static DefaultSize = 20;
+  static MinLoadFactor = 0.25;
 
-  static get MinLoadFactor() {
-    return 0.25;
-  }
+  arr: T[];
+  length = 0;
+  capacity = DynamicArray.DefaultSize;
 
-  constructor(size = this.constructor.DefaultSize) {
+  constructor(size = DynamicArray.DefaultSize) {
     this.arr = new Array(size).fill(null);
-    this.length = 0;
     this.capacity = size;
   }
 
+  get loadFactor(): number {
+    return this.length / this.capacity;
+  }
+
   /**
-   * grow expands the array using "table doubling" algorithm.
+   * grow
    *
+   * Expands the array using "table doubling" algorithm.
    * @param {int} factor growth factor, double (2x) by default
    */
   grow(factor = 2) {
@@ -30,11 +33,12 @@ class DynamicArray {
   }
 
   /**
-   * shrink shrinks the array when it gets too large.
+   * shrink
    *
+   * Shrinks the array when it gets too large.
    * @param {int} factor shrink factor, half (0.5) by default
    */
-  shrink(factor = 0.5) {
+  shrink(factor = 0.5): void {
     this.capacity = Math.floor(this.capacity * factor);
     // Create a new array with half the size of the original.
     const newArr = new Array(this.capacity).fill(null);
@@ -45,7 +49,7 @@ class DynamicArray {
     this.arr = newArr;
   }
 
-  append(item) {
+  append(item: T): void {
     if (this.length + 1 > this.capacity) {
       this.grow();
     }
@@ -53,26 +57,24 @@ class DynamicArray {
     this.length++;
   }
 
-  get loadFactor() {
-    return this.length / this.capacity;
-  }
-
   /**
-   * delete deletes an item from array by passing the item itself or by a callback.
+   * delete
+   *
+   * Deletes an item from array by passing the item itself or by a callback.
    * @param {Function|Number|String} arg
    */
-  delete(arg) {
-    if (!arg) throw new Error('Argument required to delete');
+  delete(arg: T | ((item: T) => boolean)): void {
+    if (!arg) throw new Error("Argument required to delete");
     if (!this.arr.length) return; // empty array.
 
-    const callback = typeof arg === 'function' ? arg : null;
-    const item = (typeof arg === 'number' || typeof arg === 'string') ? arg : null;
+    // const callback = typeof arg === "function" ? arg : null;
+    const item = arg instanceof Number || arg instanceof String ? arg : null;
 
     let foundItem = null;
     let foundItemIndex = null;
 
-    if (callback) {
-      foundItem = this.arr.find(callback);
+    if (arg instanceof Function) {
+      foundItem = this.arr.find((v) => arg(v));
       if (!foundItem) return;
     }
 
@@ -90,14 +92,12 @@ class DynamicArray {
 
     // If we have more than 75% extra empty space,
     // we shrink to half to preserve storage.
-    if (this.loadFactor < this.constructor.MinLoadFactor) {
+    if (this.loadFactor < DynamicArray.MinLoadFactor) {
       this.shrink();
     }
   }
 
-  find(callback) {
+  find(callback: (item: T) => boolean): T | undefined {
     return this.arr.find(callback);
   }
 }
-
-module.exports = DynamicArray;
