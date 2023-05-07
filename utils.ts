@@ -1,33 +1,35 @@
-const TreeNode = require('./BinarySearchTree').TreeNode;
-const BinaryTree = require('./BinaryTree').BinaryTree;
-const BinarySearchTree = require('./BinarySearchTree').BinarySearchTree;
+import { ListNode } from "./LinkedList";
+
+import { TreeNode } from "./BinarySearchTree";
+import BinaryTree from "./BinaryTree";
+import BinarySearchTree from "./BinarySearchTree";
 
 /* ------- Linked List utils ------- */
 
-var arrayToLinkedList = function(arr) {
-  let head = new ListNode(arr[0]);
+export function arrayToLinkedList(arr: any): ListNode<any> {
+  let head = new ListNode<any>(arr[0]);
   let prev = head;
   for (let i = 1; i < arr.length; i++) {
-    node = new ListNode(arr[i]);
+    const node = new ListNode(arr[i]);
     prev.next = node;
     prev = node;
   }
   return head;
-};
+}
 
-var linkedListToArray = function(head) {
+export function linkedListToArray(head: ListNode<any>): any[] {
   let arr = [];
   let cur = head;
   while (cur) {
-    arr.push(cur.val);
+    arr.push(cur.data);
     cur = cur.next;
   }
   return arr;
-};
+}
 
 /* ------- Binary Tree utils ------- */
 
-function arrayToTree(array = []) {
+export function arrayToTree(array = []) {
   if (!array.length) return null;
 
   const rootNode = new TreeNode(array.shift());
@@ -58,36 +60,26 @@ function arrayToTree(array = []) {
   return rootNode;
 }
 
-function arrayToBinaryTree(arr) {
+export function arrayToBinaryTree(arr) {
   return new BinaryTree(arrayToTree(arr));
 }
 
-function arrayToBinarySearchTree(arr) {
+export function arrayToBinarySearchTree(arr) {
   return new BinarySearchTree(arrayToTree(arr));
 }
 
-function binaryTreeToArray(binaryTree = null) {
+export function binaryTreeToArray(binaryTree = null) {
   if (!binaryTree) return [];
   return binaryTree.traverseLevelOrder();
 }
 
-function binarySearchTreeToArray(bst = null) {
+export function binarySearchTreeToArray(bst = null) {
   if (!bst) return [];
   if (bst.root == null) return [];
-  return bst.serialize()
-    .replace('[', '')
-    .replace(']', '')
-    .split(',')
-    .map(n => n === 'null' ? null : parseInt(n, 10));
+  return bst
+    .serialize()
+    .replace("[", "")
+    .replace("]", "")
+    .split(",")
+    .map((n) => (n === "null" ? null : parseInt(n, 10)));
 }
-
-module.exports = {
-  arrayToLinkedList,
-  linkedListToArray,
-
-  arrayToBinaryTree,
-  binaryTreeToArray,
-
-  arrayToBinarySearchTree,
-  binarySearchTreeToArray
-};

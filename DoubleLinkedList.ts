@@ -1,10 +1,10 @@
 export class ListNode<T> {
-  val: T;
+  data: T;
   next: ListNode<T> = null;
   prev: ListNode<T> = null;
 
-  constructor(val: T) {
-    this.val = val;
+  constructor(data: T) {
+    this.data = data;
   }
 }
 
@@ -12,8 +12,8 @@ export class DoubleLinkedList<T> {
   head: ListNode<T> | null;
   tail: ListNode<T> | null;
 
-  append(val: T): void {
-    const node = new ListNode(val);
+  append(data: T): void {
+    const node = new ListNode(data);
 
     // list is empty
     if (!this.head && !this.tail) {
@@ -30,8 +30,8 @@ export class DoubleLinkedList<T> {
     }
   }
 
-  prepend(val: T): void {
-    const node = new ListNode(val);
+  prepend(data: T): void {
+    const node = new ListNode(data);
 
     // list is empty
     if (!this.head && !this.tail) {
@@ -59,11 +59,11 @@ export class DoubleLinkedList<T> {
     return null;
   }
 
-  replace(callback: (node: ListNode<T>) => boolean, val: T): ListNode<T> | null {
+  replace(callback: (node: ListNode<T>) => boolean, data: T): ListNode<T> | null {
     let node = this.head;
     while (node) {
       if (callback(node)) {
-        node.val = val;
+        node.data = data;
         return node;
       }
       node = node.next;

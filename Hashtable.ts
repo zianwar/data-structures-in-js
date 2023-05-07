@@ -36,10 +36,10 @@ export class Hashtable {
     const linkedList = this.buckets[hash];
     if (!linkedList) return null;
 
-    const node = linkedList.find((node) => node.val.key === key);
+    const node = linkedList.find((node) => node.data.key === key);
     if (!node) return null; // node not found
 
-    return node.val.value;
+    return node.data.value;
   }
 
   set(key: string | number, value: unknown): void {
@@ -53,13 +53,13 @@ export class Hashtable {
     }
 
     let linkedList = this.buckets[hash];
-    let node = linkedList.find((node) => node.val.key === key);
+    let node = linkedList.find((node) => node.data.key === key);
 
     if (!node) {
       linkedList.append({ key, value });
       this.buckets[hash] = linkedList;
     } else {
-      node.val = { key, value };
+      node.data = { key, value };
     }
   }
 
@@ -67,6 +67,6 @@ export class Hashtable {
     const hash = this.hash(key);
     const linkedList = this.buckets[hash];
     if (!linkedList) return;
-    linkedList.delete((node) => node.val.key === key);
+    linkedList.delete((node) => node.data.key === key);
   }
 }

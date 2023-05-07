@@ -1,9 +1,9 @@
 export class ListNode<T> {
-  val: T;
+  data: T;
   next: ListNode<T> = null;
 
-  constructor(val: T) {
-    this.val = val;
+  constructor(data: T) {
+    this.data = data;
   }
 }
 
@@ -11,8 +11,8 @@ export class LinkedList<T> {
   head: ListNode<T> | null;
   tail: ListNode<T> | null;
 
-  append(val: T): void {
-    const node = new ListNode(val);
+  append(data: T): void {
+    const node = new ListNode(data);
 
     if (!this.head && !this.tail) {
       this.head = node;
@@ -26,8 +26,8 @@ export class LinkedList<T> {
     }
   }
 
-  prepend(val: T): void {
-    const node = new ListNode(val);
+  prepend(data: T): void {
+    const node = new ListNode(data);
 
     if (!this.head && !this.tail) {
       this.head = node;

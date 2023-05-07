@@ -1,4 +1,4 @@
-const LinkedList = require('./LinkedList');
+import { LinkedList } from "./LinkedList";
 
 /**
  * Stack data structure
@@ -12,46 +12,48 @@ const LinkedList = require('./LinkedList');
  *                             top of the stack
  *
  */
-class Stack {
-  constructor() {
-    this.linkedList = new LinkedList();
-    this.length = 0;
-  }
+export class Stack<T> {
+  linkedList = new LinkedList<T>();
+  length = 0;
 
   /**
-   * pop Appends an item at the top of the stack.
+   * pop
+   *
+   * Appends an item at the top of the stack.
    */
-  push(item) {
+  push(item: T): void {
     this.linkedList.append(item);
     this.length++;
   }
 
   /**
-   * pop Returns the item at the top of the stack.
+   * pop
+   *
+   * Returns the item at the top of the stack.
    */
-  peek() {
+  peek(): T | null {
     return this.linkedList.tail ? this.linkedList.tail.data : null;
   }
 
   /**
-   * pop Removes the item at the top of the stack and returns it.
+   * pop
+   *
+   * Removes the item at the top of the stack and returns it.
    */
-  pop() {
+  pop(): T | null {
     const tail = this.linkedList.tail;
     if (!tail) return null;
 
-    this.linkedList.delete(node => node.data === tail.data);
+    this.linkedList.delete((node) => node.data === tail.data);
     this.length--;
     return tail.data;
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this.length == 0;
   }
 
-  size() {
+  size(): number {
     return this.length;
   }
 }
-
-module.exports = Stack;

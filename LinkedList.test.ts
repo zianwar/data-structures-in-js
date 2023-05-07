@@ -1,12 +1,12 @@
 import { LinkedList } from "./LinkedList";
-import utils from "./utils";
+import * as utils from "./utils";
 
 test("append", () => {
   const linkedList = new LinkedList();
   linkedList.append(5);
 
-  expect(linkedList.head.val).toBe(5);
-  expect(linkedList.tail.val).toBe(5);
+  expect(linkedList.head.data).toBe(5);
+  expect(linkedList.tail.data).toBe(5);
   expect(utils.linkedListToArray(linkedList.head)).toEqual([5]);
 });
 
@@ -15,8 +15,8 @@ test("append - verify tail and head", () => {
   linkedList.append(5);
   linkedList.append(6);
 
-  expect(linkedList.head.val).toBe(5);
-  expect(linkedList.tail.val).toBe(6);
+  expect(linkedList.head.data).toBe(5);
+  expect(linkedList.tail.data).toBe(6);
   expect(utils.linkedListToArray(linkedList.head)).toEqual([5, 6]);
 });
 
@@ -25,15 +25,15 @@ test("prepend", () => {
   linkedList.prepend("foo");
   linkedList.prepend("bar");
 
-  expect(linkedList.head.val).toBe("bar");
-  expect(linkedList.tail.val).toBe("foo");
+  expect(linkedList.head.data).toBe("bar");
+  expect(linkedList.tail.data).toBe("foo");
   expect(utils.linkedListToArray(linkedList.head)).toEqual(["bar", "foo"]);
 });
 
 test("delete", () => {
   const linkedList = new LinkedList();
   linkedList.append(5);
-  linkedList.delete((node) => node.val === 5);
+  linkedList.delete((node) => node.data === 5);
 
   expect(utils.linkedListToArray(linkedList.head)).toEqual([]);
 });
@@ -43,9 +43,9 @@ test("find", () => {
   linkedList.append(5);
   linkedList.append(6);
   linkedList.append(7);
-  const existingNode = linkedList.find((node) => node.val === 7);
-  const nonExistingNode = linkedList.find((node) => node.val === 99);
+  const existingNode = linkedList.find((node) => node.data === 7);
+  const nonExistingNode = linkedList.find((node) => node.data === 99);
 
-  expect(existingNode.val).toBe(7);
+  expect(existingNode.data).toBe(7);
   expect(nonExistingNode).toBeNull();
 });
