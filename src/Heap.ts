@@ -7,6 +7,7 @@ export abstract class Heap<T> {
 
   private hasLeft = (i: number) => !!this.left(i);
   private hasRight = (i: number) => !!this.right(i);
+  private hasParent = (i: number) => !!this.parent(i);
 
   private isValid = (i: number) => !!this.elements[i];
 
@@ -49,11 +50,10 @@ export abstract class Heap<T> {
       return this.elements.pop();
     }
 
-    // move last element to the front
+    // move last element to the front and adjust the heap
     let first = this.elements[0];
     let last = this.elements.pop() as T;
     this.elements[0] = last;
-
     this.heapify();
 
     return first;
@@ -61,15 +61,15 @@ export abstract class Heap<T> {
 
   public add(element: T) {
     this.elements.push(element);
-    this.heapify();
+    this.heapifyUp();
   }
 
   /**
-   * heapify - O(n)
+   * heapify - O(log(n))
    *
    * Maintains the heap property of the elements array.
-   * It iterates through the array, swapping elements when necessary to satisfy
-   * the heap invariant defined by child class (Max or Min).
+   * It iterates through the array from the root, swapping elements when necessary
+   * to satisfy the heap invariant defined by child class (Max or Min).
    */
   private heapify(): void {
     if (this.elements.length <= 1) return;
@@ -87,6 +87,22 @@ export abstract class Heap<T> {
         this.swap(i, this.rightIndex(i));
       }
       i = this.rightIndex(i);
+    }
+  }
+
+  /**
+   * heapifyUp - O(log(n))
+   */
+  private heapifyUp(): void {
+    if (this.elements.length <= 1) return;
+
+    // current index: last element index.
+    let i = this.elements.length - 1;
+    while (this.isValid(i) && this.hasParent(i)) {
+      if (!this.invariant(i, this.parentIndex(i))) {
+        this.swap(i, this.parentIndex(i));
+      }
+      i = this.parentIndex(i);
     }
   }
 
